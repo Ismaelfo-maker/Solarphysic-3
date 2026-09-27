@@ -1,0 +1,32 @@
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+body { overflow: hidden; background-color: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 14px; }
+#canvas-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; }
+#ui-layer { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; }
+header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 10px; background: rgba(10,10,30,0.85); pointer-events: auto; border-bottom: 1px solid #4db8ff; }
+h1 { font-size: 1.2rem; color: #4db8ff; margin-right: 15px; }
+#date-controls, #time-controls, #view-controls { margin: 5px; }
+input[type=date] { background: #1a1a3a; color: white; border: 1px solid #4db8ff; padding: 5px; border-radius: 4px; }
+button, select { background: #1a1a3a; color: white; border: 1px solid #4db8ff; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
+button:active { background: #4db8ff; color: black; }
+.panel { background: rgba(10, 10, 30, 0.9); border: 1px solid #4db8ff; border-radius: 8px; padding: 15px; margin: 10px; pointer-events: auto; backdrop-filter: blur(5px); box-shadow: 0 4px 6px rgba(0,0,0,0.5); max-height: 80vh; overflow-y: auto; }
+.hidden { display: none !important; }
+h2 { margin-bottom: 10px; font-size: 1.1rem; color: #ffcc00; border-bottom: 1px solid #444; padding-bottom: 5px; }
+h3 { font-size: 1rem; color: #fff; margin-top: 15px; margin-bottom: 5px; }
+p { margin-bottom: 5px; color: #ddd; }
+input[type=range] { width: 100%; margin: 10px 0; accent-color: #4db8ff; }
+#bottom-nav { display: flex; justify-content: space-around; padding: 10px; background: rgba(10,10,30,0.9); pointer-events: auto; border-top: 1px solid #4db8ff; }
+#bottom-nav button { flex: 1; padding: 15px; font-size: 1rem; font-weight: bold; margin: 0 5px; }
+button.primary { background: #28a745; border-color: #28a745; width: 100%; padding: 12px; margin-top: 10px; font-weight: bold; }
+button.secondary { background: #dc3545; border-color: #dc3545; width: 100%; padding: 10px; margin-top: 5px; }
+#hud-energy { position: absolute; top: 70px; right: 10px; font-size: 0.9rem; color: #aaa; background: rgba(0,0,0,0.5); padding: 5px; border-radius: 4px; pointer-events: auto;}
+.prediction { font-style: italic; color: #ffaa00; margin: 10px 0; }
+.data-source { font-size: 0.75rem; color: #888; margin-top: 10px; }
+#graph-panel { position: absolute; right: 10px; top: 120px; width: 320px; }
+#telemetry-chart { background: #000; border: 1px solid #333; border-radius: 4px; width: 100%; margin-top: 5px;}
+#history-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 5px; }
+#history-table th, #history-table td { border: 1px solid #444; padding: 4px; text-align: center; }
+#history-table th { background: #1a1a3a; color: #4db8ff; }
+@media (max-width: 600px) {
+    header { flex-direction: column; align-items: flex-start; }
+    #graph-panel { position: static; width: 100%; margin: 10px 0; }
+}
