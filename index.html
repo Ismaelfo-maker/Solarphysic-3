@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Solar Physics Simulator PWA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a2a">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div id="ui-layer">
+        <header>
+            <h1>Solar Physics</h1>
+            
+            <div id="date-controls">
+                <input type="date" id="sim-date" value="2026-09-27">
+                <button id="btn-set-date">Fijar Fecha</button>
+            </div>
+
+            <div id="time-controls">
+                <button id="btn-pause">⏸</button>
+                <button id="btn-play">▶</button>
+                <select id="time-scale">
+                    <option value="1">x1</option>
+                    <option value="86400">1 Día/s</option>
+                    <option value="864000" selected>10 Días/s</option>
+                    <option value="2592000">1 Mes/s</option>
+                </select>
+            </div>
+            <div id="view-controls">
+                <select id="scale-mode">
+                    <option value="real">Escala Real</option>
+                    <option value="visual" selected>Escala Visual</option>
+                    <option value="edu">Escala Educativa (UA)</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Paneles Ocultos -->
+        <div id="info-panel" class="panel hidden">
+            <h2 id="info-name">-</h2>
+            <p>Masa: <span id="info-mass">-</span> kg</p>
+            <p>Radio: <span id="info-radius">-</span> km</p>
+            <p>Distancia al Sol: <span id="info-dist">-</span> UA</p>
+            <p>Velocidad: <span id="info-vel">-</span> km/s</p>
+            <p class="data-source">Fuente: Datos astronómicos NASA/JPL</p>
+            <button id="btn-close-info" class="secondary">Cerrar</button>
+        </div>
+
+        <div id="launch-panel" class="panel hidden">
+            <h2>🚀 Lanzamiento desde Tierra</h2>
+            <label>Velocidad extra: <span id="val-vel">10</span> km/s</label>
+            <input type="range" id="slider-vel" min="0" max="50" step="0.1" value="10">
+            
+            <label>Ángulo respecto a órbita: <span id="val-angle">0</span>°</label>
+            <input type="range" id="slider-angle" min="0" max="360" step="1" value="0">
+            
+            <div class="prediction">Predicción teórica: <span id="traj-prediction">Órbita Elíptica</span></div>
+            
+            <button id="btn-launch" class="primary">Lanzar Nave</button>
+            
+            <div id="history-container">
+                <h3>Historial de Experimentos</h3>
+                <table id="history-table">
+                    <thead><tr><th>Vel (km/s)</th><th>Ángulo (°)</th><th>Resultado Físico</th></tr></thead>
+                    <tbody id="history-body"></tbody>
+                </table>
+            </div>
+
+            <button id="btn-close-launch" class="secondary">Cerrar Panel</button>
+        </div>
+
+        <!-- Telemetría -->
+        <div id="graph-panel" class="panel">
+            <select id="graph-type">
+                <option value="vel">Velocidad (km/s)</option>
+                <option value="dist">Distancia al Sol (UA)</option>
+            </select>
+            <canvas id="telemetry-chart" width="300" height="100"></canvas>
+            <p>Estado Nave: <span id="ship-status">En espera</span></p>
+            <p id="assist-hud" style="color: #00ffaa; font-size:0.8rem; display:none;">Asistencia Gravitatoria detectada!</p>
+        </div>
+
+        <div id="mission-panel" class="panel">
+            <h2>Gestor de Misiones</h2>
+            <p id="mission-desc">Misión 1/10: Inicia la simulación y abre el panel de información de cualquier planeta gigante.</p>
+            <progress id="mission-progress" value="0" max="10" style="width:100%;"></progress>
+        </div>
+
+        <nav id="bottom-nav">
+            <button id="nav-launch">🚀 Lanzar</button>
+            <button id="nav-reset">🔄 Reiniciar Sistema</button>
+        </nav>
+        
+        <div id="hud-energy">
+            ΔE (Error integrador): <span id="energy-val">0.00%</span>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="physics.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
